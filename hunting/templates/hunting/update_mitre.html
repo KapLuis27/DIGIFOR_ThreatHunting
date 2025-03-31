@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MITRE ATT&CK IOCs Fetched</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h2 class="text-center">Fetched MITRE ATT&CK IOCs</h2>
+
+        {% if fetched_iocs %}
+            <div class="alert alert-success">
+                <strong>{{ fetched_iocs|length }} new IOCs were added to the system.</strong>
+            </div>
+
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>IOC Type</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ioc in fetched_iocs %}
+                    <tr>
+                        <td>{{ ioc.type }}</td>
+                        <td>{{ ioc.value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-warning">
+                <strong>No new IOCs were added.</strong> All fetched IOCs were already in the system.
+            </div>
+        {% endif %}
+
+        <div class="text-center mt-4">
+            <a href="{% url 'index' %}" class="btn btn-primary">🔙 Return to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
