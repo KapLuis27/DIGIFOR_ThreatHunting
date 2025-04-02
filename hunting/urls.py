@@ -1,9 +1,12 @@
 from django.urls import path
-from .views import index, download_report, add_ioc, update_mitre_iocs
+from . import views
 
 urlpatterns = [
-    path('', index, name='index'),
-    path('add_ioc/', add_ioc, name='add_ioc'),
-    path('report/', download_report, name='download_report'),
-    path('update_mitre_iocs/', update_mitre_iocs, name='update_mitre_iocs'), 
+    path('', views.index, name='index'),
+    path('add_ioc/', views.add_ioc, name='add_ioc'),
+    path('download_report/', views.download_report, name='download_report'),
+    path('update_mitre_iocs/', views.update_mitre_iocs, name='update_mitre_iocs'),
+    path('update_threat_intel/', views.update_threat_intel, name='update_threat_intel'),
+    # test data insertion
+    path('insert_test_data/', views.insert_test_data, name='insert_test_data'),
 ]

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Threat Intelligence Update</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Threat Hunting Dashboard</span>
+            <a href="{% url 'index' %}" class="btn btn-outline-light">Return to Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Threat Intelligence Updated</h4>
+            </div>
+            <div class="card-body">
+                <h5>Sources Used:</h5>
+                <ul class="list-group mb-4">
+                    {% for source in sources %}
+                    <li class="list-group-item">{{ source }}</li>
+                    {% endfor %}
+                </ul>
+
+                {% if fetched_iocs %}
+                    <h5>New IOCs Added ({{ fetched_iocs|length }} total):</h5>
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for ioc in fetched_iocs %}
+                                <tr>
+                                    <td>{{ ioc.type }}</td>
+                                    <td>{{ ioc.value }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        No new IOCs were found during this update. This is normal if the feeds haven't changed or all IOCs were already in the database.
+                    </div>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'index' %}" class="btn btn-primary">Back to Dashboard</a>
+                    <a href="{% url 'update_threat_intel' %}" class="btn btn-warning">Update Again</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-4 py-3 bg-dark text-white">
+        &copy; 2025 Threat Hunting System
+    </footer>
+</body>
+</html>
