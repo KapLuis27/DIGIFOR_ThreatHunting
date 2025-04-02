@@ -8,6 +8,57 @@ from .utils import (
 from django.http import FileResponse
 from datetime import datetime
 
+from django.shortcuts import redirect
+from django.contrib import messages
+
+def insert_test_data(request):
+    """Insert test data for demonstration purposes"""
+    
+    # Add sample IOCs (these are known malware names and malicious IPs)
+    sample_iocs = [
+        # Common malware process names
+        {"ioc_type": "process", "value": "mimikatz.exe"},
+        {"ioc_type": "process", "value": "netcat.exe"},
+        {"ioc_type": "process", "value": "powershell_empire.exe"},
+        
+        # Known malicious IPs (examples only)
+        {"ioc_type": "ip", "value": "192.168.1.100"},
+        {"ioc_type": "ip", "value": "203.0.113.45"}
+    ]
+
+    # Insert IOCs
+    for ioc in sample_iocs:
+        IOC.objects.get_or_create(ioc_type=ioc["ioc_type"], value=ioc["value"])
+
+    # Add sample processes that would match IOCs
+    Process.objects.get_or_create(
+        name="mimikatz.exe", 
+        pid=9999, 
+        path="C:\\Temp\\mimikatz.exe", 
+        hash_value="abcd1234",
+        defaults={"detected": False}
+    )
+
+    # Add sample network connections that would match IOCs
+    NetworkConnection.objects.get_or_create(
+        local_ip="192.168.0.10", 
+        local_port=49152, 
+        remote_ip="192.168.1.100", 
+        remote_port=443, 
+        protocol="TCP",
+        defaults={"detected": False}
+    )
+
+    # Run IOC detection
+    check_iocs()
+    
+    # Count threats
+    process_threats = Process.objects.filter(detected=True).count()
+    network_threats = NetworkConnection.objects.filter(detected=True).count()
+    
+    messages.success(request, f"Test data inserted and {process_threats + network_threats} threats detected!")
+    return redirect('index')
+
 def index(request):
     processes = get_running_processes()
     network_connections = get_network_connections()
