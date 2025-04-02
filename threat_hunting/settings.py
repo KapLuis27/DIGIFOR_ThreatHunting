@@ -122,3 +122,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Threat Intelligence API Keys
+VIRUSTOTAL_API_KEY = '3a4b21f73e04210fa98b7167623f43e96b2ef73a84e8ea7e41820069b2594d33'  # Your existing key
+
+# New API configurations - fill in your keys as you obtain them
+OTX_API_KEY = ''  # Add your AlienVault OTX API key
+MISP_URL = ''     # Add your MISP instance URL
+MISP_API_KEY = '' # Add your MISP API key
+
+# Threat Intelligence Update Interval (in hours)
+THREAT_INTEL_UPDATE_INTERVAL = 24  # Update once per day by default

@@ -30,6 +30,15 @@
     <div class="container mt-4">
         <h2 class="text-center mb-4">System Monitoring</h2>
 
+        <div class="alert alert-info mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>Threat Intelligence Status:</strong> Last updated: {{ last_update }}
+                </div>
+                <a href="{% url 'update_threat_intel' %}" class="btn btn-warning">🔄 Update Threat Intelligence</a>
+            </div>
+        </div>
+        
         <!-- Running Processes -->
 <div class="card shadow-sm mb-4">
     <div class="card-header bg-primary text-white">
@@ -165,8 +174,8 @@
         </div>
 
         <div class="text-center mt-4">
-            <form action="{% url 'update_mitre_iocs' %}" method="GET">
-                <button class="btn btn-warning">🔄 Fetch MITRE ATT&CK IOCs</button>
+            <form action="{% url 'update_threat_intel' %}" method="GET">
+                <button class="btn btn-warning btn-lg">🔄 Update Threat Intelligence</button>
             </form>
         </div>
 
